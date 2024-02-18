@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="./styles.css">
+    <style>
+        /* Add your custom styles here */
+        .container {
+            position: relative;
+        }
+
+        .btn {
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            <h1 class="header_text">Do you wanna go out with me?</h1>
+            <h1 class="header_text">Are you free today?</h1>
+        </div>
+        <div class="gif_container">
+            <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDdtZ2JiZDR0a3lvMWF4OG8yc3p6Ymdvd3g2d245amdveDhyYmx6eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif"
+                alt="Cute animated illustration">
+        </div>
+        <div class="buttons">
+            <button class="btn" id="yesButton" onclick="handleYesClick()">Yes</button>
+            <button class="btn" id="noButton" onclick="handleNoClick()">No</button>
+            </button>
+            <script>
+                const yesButton = document.getElementById("yesButton");
+                const noButton = document.getElementById("noButton");
+                let clickCount = 0;
+
+                function handleYesClick() {
+                        window.location.href = "yes.html";
+                    }
+            
+                function handleNoClick() {
+                    yesButton.style.transform = `scale(${1 + 0.8 * clickCount})`;
+                    const buttonText = [
+                        "Bypass ? ",
+                        "We Can Make Sauce , NO ? ",
+                        "WINE ? , STILL NO ?",
+                        "NETFLIX & CHILL ? , STILL NO ?",
+                        "KISS , STILL NO ?",
+                        "HUGS , STILL NO ?",
+                        "Kaise sa hai Tu",
+                        "Kitne Drame Hai Tere",
+                        "😔😔😔😔",
+                        "😢😢😢😢",
+                        "Last Bar Puch Rhi Hu"
+                    ];
+            
+                    noButton.textContent = buttonText[clickCount];
+            
+                    // Increment clickCount after updating the button text
+                    clickCount = (clickCount + 1) % buttonText.length;
+                }
+            </script>
+        </div>
+    </div>
+</body>
+
+</html>
