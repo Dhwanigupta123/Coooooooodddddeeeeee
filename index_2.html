@@ -1,81 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Missing You 😢❤️</title>
-  <style>
-    body {
-      background: linear-gradient(#fde2e4, #fff0f3);
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      height: 100vh;
-      margin: 0;
-      overflow: hidden;
-      text-align: center;
-    }
-    h1 {
-      font-size: 2rem;
-      color: #b0005c;
-      margin-bottom: 20px;
-    }
-    .message-box {
-      font-size: 1.5rem;
-      padding: 20px;
-      max-width: 500px;
-      border-radius: 20px;
-      background-color: #fff;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      animation: fadeIn 1s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .heart {
-      font-size: 2rem;
-      animation: float 2s infinite;
-    }
-    @keyframes float {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-      100% { transform: translateY(0); }
-    }
-  </style>
-  <meta http-equiv="refresh" content="3;url=index.html" />
+    <meta charset="UTF-8">
+    <title>Page 2</title>
+    <style>
+        body {
+            background-color: lightblue;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 100px;
+        }
+        h1 {
+            color: darkblue;
+        }
+        #backBtn {
+            display: none; /* hidden by default */
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        #backBtn:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
+    <h1>This is Index 2 Page</h1>
+    <p>Welcome to the second page.</p>
 
-  <h1>Hi baby, here's how much I miss you 👇</h1>
-  <div class="message-box" id="messageBox">Loading sweet nothings...</div>
-  <div class="heart">❤️</div>
+    <!-- Button appears after delay -->
+    <a id="backBtn" href="index.html">← Go to Index Page</a>
 
-  <script>
-    const messages = [
-      "Thinking of you 24/7 😭",
-      "Wish you were here to pull my cheeks 🥺",
-      "I’d give anything for one hug rn 🤗",
-      "Your voice > every playlist 🎶",
-      "No text? BRB overthinking 🧠💥",
-      "You’re my comfort person 😘",
-      "Missing you is my new full-time job 😤",
-      "When I see couples outside: *cries in long-distance* 💔",
-      "Come back already 😡 (jk love you)",
-      "You’re the peanut butter to my paratha 🫓💕"
-    ];
-
-    let index = 0;
-    const box = document.getElementById("messageBox");
-
-    setInterval(() => {
-      box.innerText = messages[index];
-      index = (index + 1) % messages.length;
-    }, 2000);
-  </script>
-<a href="index.html">Click to meet</a>
-
+    <script>
+        // Show the button after 5 seconds
+        setTimeout(() => {
+            document.getElementById('backBtn').style.display = 'inline-block';
+        }, 5000); // 5000 milliseconds = 5 seconds
+    </script>
 </body>
 </html>
