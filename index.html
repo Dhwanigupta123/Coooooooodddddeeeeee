@@ -1,222 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Flags & Buttons Example</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #fff0f6;
-      margin: 0;
-      padding: 40px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-    }
+    <link rel="stylesheet" href="./styles.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #fff;
+            overflow-x: hidden; /* prevent horizontal scroll */
+        }
 
-    /* Flags container */
-    .flags-container {
-      width: 90%;
-      max-width: 700px;
-      position: relative;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 40px 0;
-    }
+        .container {
+            position: relative;
+            text-align: center;
+            padding-top: 50px;
+        }
 
-    .flag-box {
-      position: relative;
-      width: 120px;
-      height: 80px;
-      cursor: default;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 0 10px rgba(176, 0, 92, 0.4);
-      background: white;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+        .header_text {
+            font-size: 24px;
+            font-weight: bold;
+            color: #b0005c;
+            margin: 10px 0;
+        }
 
-    .flag-box:hover {
-      transform: scale(1.1) rotate(3deg);
-      box-shadow: 0 0 20px rgba(255, 64, 129, 0.7);
-    }
+        /* GIF container restored from your original code */
+        .gif_container img {
+            width: 250px;
+            margin: 20px 0;
+        }
 
-    .flag-box img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
+        /* Buttons styling with better look */
+        .buttons {
+            margin-top: 20px;
+            position: relative;
+            height: 60px;
+        }
 
-    .pin {
-      position: absolute;
-      top: -25px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 22px;
-      height: 30px;
-      background: #b0005c;
-      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-      box-shadow: 0 0 6px #b0005c88;
-      z-index: 10;
-    }
+        .btn {
+            padding: 12px 28px;
+            margin: 10px;
+            font-size: 18px;
+            background: linear-gradient(45deg, #ff007f, #b0005c);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(176, 0, 92, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            font-weight: 600;
+            user-select: none;
+        }
 
-    .pin::after {
-      content: '';
-      position: absolute;
-      top: 6px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 10px;
-      height: 10px;
-      background: white;
-      border-radius: 50%;
-      box-shadow: 0 0 3px #b0005caa;
-    }
+        .btn:hover {
+            background: linear-gradient(45deg, #b0005c, #ff007f);
+            box-shadow: 0 6px 12px rgba(176, 0, 92, 0.6);
+            transform: scale(1.05);
+        }
 
-    /* Heart connector SVG */
-    svg.connector {
-      position: absolute;
-      top: 30px;
-      left: 0;
-      width: 100%;
-      height: 100px;
-      pointer-events: none;
-      z-index: 0;
-    }
+        /* Floating hearts container */
+        .heart {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background-image: url('https://emoji.slack-edge.com/T024FPYBQ/heart/4e1ec3f1be1f9b5b.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            pointer-events: none;
+            animation: floatUp 2s ease forwards;
+            z-index: 9999;
+        }
 
-    /* Buttons container */
-    .buttons {
-      margin-top: 20px;
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      position: relative;
-      height: 60px;
-    }
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
 
-    /* Buttons style */
-    .btn {
-      background: linear-gradient(45deg, #b0005c, #ff4081);
-      border: none;
-      border-radius: 25px;
-      padding: 12px 30px;
-      color: white;
-      font-weight: 700;
-      font-size: 18px;
-      cursor: pointer;
-      box-shadow: 0 4px 14px rgba(176, 0, 92, 0.7);
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      user-select: none;
-    }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(1.5);
+            }
+        }
 
-    .btn:hover {
-      background: linear-gradient(45deg, #ff4081, #b0005c);
-      box-shadow: 0 6px 20px rgba(255, 64, 129, 0.9);
-      transform: translateY(-3px) scale(1.05);
-    }
+        /* Music toggle button */
+        #musicToggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #b0005c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 22px;
+            cursor: pointer;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    .btn:active {
-      transform: translateY(1px) scale(0.95);
-      box-shadow: 0 3px 10px rgba(176, 0, 92, 0.6);
-    }
+        /* Flags and pins container */
+        .flags-container {
+            position: fixed;
+            top: 40%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+            z-index: 5000;
+            padding: 0 40px;
+        }
 
-    /* Heart animation */
-    .heart {
-      position: fixed;
-      width: 20px;
-      height: 20px;
-      background: red;
-      clip-path: polygon(
-        50% 0%, 61% 15%, 75% 15%, 85% 30%, 85% 45%, 75% 60%, 50% 80%,
-        25% 60%, 15% 45%, 15% 30%, 25% 15%, 39% 15%);
-      pointer-events: none;
-      animation: floatUp 2s ease forwards;
-      z-index: 9999;
-    }
+        /* Each flag */
+        .flag {
+            position: relative;
+            width: 120px;
+            height: 80px;
+            box-shadow: 0 0 10px rgba(176, 0, 92, 0.7);
+            border-radius: 12px;
+            background-color: white;
+        }
 
-    @keyframes floatUp {
-      0% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
+        .flag img {
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            object-fit: cover;
+        }
 
-      100% {
-        opacity: 0;
-        transform: translateY(-100px) scale(1.5);
-      }
-    }
+        /* Pin below each flag */
+        .pin {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle at center, #b0005c 40%, transparent 70%);
+            border-radius: 50% 50% 50% 0;
+            transform-origin: bottom left;
+            transform: translateX(-50%) rotate(-45deg);
+            box-shadow: 0 0 5px #b0005c;
+            filter: drop-shadow(0 0 3px #b0005c);
+        }
 
-    /* Music toggle button */
-    #musicToggle {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #b0005c;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      font-size: 20px;
-      cursor: pointer;
-      z-index: 10000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  </style>
+        /* Heart SVG connector */
+        .heart-connector {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 150px;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 4999;
+        }
+    </style>
 </head>
-<body>
 
-  <!-- Flags with pins and heart connector -->
-  <div class="flags-container">
-    <div class="flag-box" title="He is in UK">
-      <div class="pin"></div>
-      <img src="images/ukflag.svg" alt="UK Flag" />
+<body>
+    <div class="container">
+        <div>
+            <h1 class="header_text">Do you wanna go out with me?</h1>
+            <h1 class="header_text">Are you free today?</h1>
+        </div>
+
+        <!-- Your original funny GIF restored -->
+        <div class="gif_container">
+            <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDdtZ2JiZDR0a3lvMWF4OG8yc3p6Ymdvd3g2d245amdveDhyYmx6eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif"
+                alt="Funny animated cartoon">
+        </div>
+
+        <div class="buttons">
+            <button class="btn" id="yesButton" onclick="handleYesClick()">Yes</button>
+            <button class="btn" id="noButton" onclick="handleNoClick()">No</button>
+        </div>
     </div>
 
-    <svg class="connector" viewBox="0 0 700 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-      <path
-        d="M100 80
-           C 200 0, 500 0, 600 80
-           M200 80
-           C 300 120, 400 120, 500 80"
-        fill="none"
-        stroke="#b0005c"
-        stroke-width="3"
-        stroke-dasharray="8 10"
-      />
-      <text x="350" y="45" text-anchor="middle" font-size="40" fill="#b0005c" font-family="Arial, sans-serif"
-        dominant-baseline="middle">❤️</text>
+    <!-- Flags with pins -->
+    <div class="flags-container">
+        <div class="flag" id="ukFlag">
+            <img src="images/ukflag.svg" alt="UK Flag" />
+            <div class="pin"></div>
+        </div>
+
+        <div class="flag" id="indiaFlag">
+            <img src="images/indiaflag.svg" alt="India Flag" />
+            <div class="pin"></div>
+        </div>
+    </div>
+
+    <!-- Heart SVG connector between the two flags -->
+    <svg class="heart-connector" viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <path
+            d="M20 75 Q100 0 180 75 Q100 150 20 75 Z"
+            fill="none" stroke="#b0005c" stroke-width="4" />
+        <text x="100" y="65" text-anchor="middle" font-size="36" fill="#b0005c" font-family="Arial">❤️</text>
     </svg>
 
-    <div class="flag-box" title="I am in India">
-      <div class="pin"></div>
-      <img src="images/indiaflag.svg" alt="India Flag" />
-    </div>
-  </div>
+    <!-- Background music -->
+    <audio id="bgMusic" loop>
+        <source src="music/music.mp3" type="audio/mp3" />
+        <!-- Your actual Dooriyan song mp3 should be here -->
+    </audio>
+    <button id="musicToggle" title="Mute/Unmute Music">🔈</button>
 
-  <!-- Buttons -->
-  <div class="buttons">
-    <button class="btn" id="yesButton">Yes</button>
-    <button class="btn" id="noButton">No</button>
-  </div>
+    <!-- Confetti library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-  <!-- Audio and music toggle -->
-  <audio id="bgMusic" loop>
-    <source src="music/music.mp3" type="audio/mp3" />
-  </audio>
-  <button id="musicToggle" title="Mute/Unmute Music">🔈</button>
+    <script>
+        const yesButton = document.getElementById("yesButton");
+        const noButton = document.getElementById("noButton");
+        const bgMusic = document.getElementById("bgMusic");
+        const musicToggle = document.getElementById("musicToggle");
+        let clickCount = 0;
 
-  <!-- Confetti library -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <!-- Your custom JS -->
-  <script src="js/custom.js"></script>
-</body>
-</html>
+        // Play music on load, muted if blocked
+        bgMusic.volume = 0.3;
+        bgMusic.muted = false;
+        bgMusic.play().catch(() => {
+            bgMusic.muted = true;
+        });
+
+        // Toggle music
+        musicToggle.addEventListener("click", () => {
+            if (bgMusic.muted) {
+                bgMusic.muted = false;
+                musicToggle.textContent = "🔈";
+            } else {
+                bgMusic.muted = true;
+                musicToggle.textContent = "🔇";
+            }
+        });
+
+        // Create floating heart at position
+        function createHeart(x, y) {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.style.left = `${x}px`;
+            heart.style.top = `${y}px`;
+            document.body.appendChild
