@@ -37,7 +37,6 @@
       border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 0 10px rgba(176, 0, 92, 0.4);
-      transition: transform 0.3s ease;
       background: white;
     }
 
@@ -80,7 +79,7 @@
       box-shadow: 0 0 3px #b0005caa;
     }
 
-    /* Heart dotted curve connecting the two flags */
+    /* Heart-shaped dotted curve connecting the two flags */
     svg.connector {
       position: absolute;
       top: 30px;
@@ -107,7 +106,7 @@
       justify-content: center;
       gap: 30px;
       position: relative;
-      height: 60px; /* reserve space for moving no button */
+      height: 60px;
     }
 
     /* Styled buttons */
@@ -143,9 +142,10 @@
       position: fixed;
       width: 20px;
       height: 20px;
-      background-image: url('https://emoji.slack-edge.com/T024FPYBQ/heart/4e1ec3f1be1f9b5b.png');
-      background-size: contain;
-      background-repeat: no-repeat;
+      background: red;
+      clip-path: polygon(
+        50% 0%, 61% 15%, 75% 15%, 85% 30%, 85% 45%, 75% 60%, 50% 80%,
+        25% 60%, 15% 45%, 15% 30%, 25% 15%, 39% 15%);
       pointer-events: none;
       animation: floatUp 2s ease forwards;
       z-index: 9999;
@@ -191,7 +191,6 @@
       <img src="https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg" alt="UK Flag" />
     </div>
 
-    <!-- Heart-shaped dotted curve connecting flags -->
     <svg class="connector" viewBox="0 0 700 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
       <path
         d="M100 80
@@ -237,16 +236,15 @@
     const noButton = document.getElementById("noButton");
     const bgMusic = document.getElementById("bgMusic");
     const musicToggle = document.getElementById("musicToggle");
-    let clickCount = 0;
 
-    // Start music on page load, muted by default (browser autoplay policy)
+    let noClickCount = 0;
+
+    // Start music on page load
     bgMusic.volume = 0.3;
-    bgMusic.muted = false;
     bgMusic.play().catch(() => {
-      bgMusic.muted = true;
+      bgMusic.muted = true; // mute if autoplay blocked
     });
 
-    // Toggle music mute/unmute
     musicToggle.addEventListener("click", () => {
       if (bgMusic.muted) {
         bgMusic.muted = false;
@@ -257,22 +255,20 @@
       }
     });
 
+    // Create floating heart at position
     function createHeart(x, y) {
       const heart = document.createElement("div");
       heart.classList.add("heart");
-      heart.style.left = `${x}px`;
-      heart.style.top = `${y}px`;
+      heart.style.left = x + "px";
+      heart.style.top = y + "px";
       document.body.appendChild(heart);
-
-      setTimeout(() => {
-        heart.remove();
-      }, 2000);
+      setTimeout(() => heart.remove(), 2000);
     }
 
     // Confetti + hearts + redirect on Yes click
-    function handleYesClick() {
+    yesButton.addEventListener("click", () => {
       const rect = yesButton.getBoundingClientRect();
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 15; i++) {
         const x = rect.left + rect.width / 2 + (Math.random() - 0.5) * 100;
         const y = rect.top + rect.height / 2 + (Math.random() - 0.5) * 100;
         createHeart(x, y);
@@ -281,4 +277,63 @@
       confetti({
         particleCount: 100,
         spread: 70,
-        origin:
+        origin: { y: 0.6 }
+      });
+
+      // Redirect after 2.5 seconds
+      setTimeout(() => {
+        window.location.href = "https://www.google.com";
+      }, 2500);
+    });
+
+    // Fun No button behavior: dodge + cycle funny messages
+    const noMessages = [
+      "Are you sure? 😢",
+      "Please say yes! ❤️",
+      "I promise I'll be good 😇",
+      "No? Come on! 😞",
+      "You broke my heart 💔",
+      "Okay, maybe next time... 😔",
+    ];
+
+    noButton.addEventListener("click", () => {
+      alert(noMessages[noClickCount % noMessages.length]);
+      noClickCount++;
+    });
+
+    // Dodging mouse on No button hover
+    noButton.addEventListener("mousemove", (e) => {
+      const button = noButton;
+      const container = button.parentElement;
+
+      const rect = button.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+
+      const offsetX = e.clientX - rect.left;
+      const offsetY = e.clientY - rect.top;
+
+      const moveX = (offsetX - rect.width / 2) * 2;
+      const moveY = (offsetY - rect.height / 2) * 2;
+
+      let newLeft = rect.left - containerRect.left - moveX;
+      let newTop = rect.top - containerRect.top - moveY;
+
+      // clamp inside container
+      newLeft = Math.min(containerRect.width - rect.width, Math.max(0, newLeft));
+      newTop = Math.min(containerRect.height - rect.height, Math.max(0, newTop));
+
+      button.style.position = "absolute";
+      button.style.left = newLeft + "px";
+      button.style.top = newTop + "px";
+    });
+
+    // Reset No button position on mouse leave
+    noButton.addEventListener("mouseleave", () => {
+      noButton.style.position = "static";
+      noButton.style.left = "";
+      noButton.style.top = "";
+    });
+  </script>
+</body>
+
+</html>
