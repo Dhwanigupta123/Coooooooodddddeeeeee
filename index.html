@@ -2,60 +2,99 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="./styles.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Invitation</title>
+
     <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #fff;
-            overflow-x: hidden; /* prevent horizontal scroll */
-        }
-
-        .container {
-            position: relative;
+            background: #fff;
+            overflow-x: hidden;
             text-align: center;
-            padding-top: 50px;
+            padding: 20px;
         }
 
-        .header_text {
-            font-size: 24px;
-            font-weight: bold;
+        .flags-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 20px;
+            position: relative;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .flag {
+            width: 120px;
+            height: 80px;
+            border-radius: 12px;
+            box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .flag:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Line connecting the flags */
+        .flags-container::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 140px;
+            right: 140px;
+            height: 3px;
+            background: linear-gradient(90deg, #b0005c 0%, #0055b3 100%);
+            z-index: 0;
+            transform: translateY(-50%);
+            border-radius: 2px;
+        }
+
+        h1.header_text {
+            font-size: 26px;
             color: #b0005c;
             margin: 10px 0;
         }
 
-        /* GIF container restored from your original code */
         .gif_container img {
-            width: 250px;
-            margin: 20px 0;
+            width: 260px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px #b0005c;
+            margin: 20px auto;
+            display: block;
         }
 
-        /* Buttons styling with better look */
         .buttons {
-            margin-top: 20px;
+            margin-top: 30px;
             position: relative;
-            height: 60px;
+            height: 80px;
         }
 
         .btn {
-            padding: 12px 28px;
-            margin: 10px;
+            padding: 15px 30px;
+            margin: 10px 25px;
             font-size: 18px;
-            background: linear-gradient(45deg, #ff007f, #b0005c);
+            font-weight: bold;
+            background: linear-gradient(45deg, #b0005c, #0055b3);
             color: white;
             border: none;
-            border-radius: 20px;
+            border-radius: 25px;
             cursor: pointer;
-            box-shadow: 0 4px 8px rgba(176, 0, 92, 0.4);
+            box-shadow: 0 4px 12px rgba(176, 0, 92, 0.7);
             transition: all 0.3s ease;
             position: relative;
-            font-weight: 600;
-            user-select: none;
+            overflow: hidden;
         }
 
         .btn:hover {
-            background: linear-gradient(45deg, #b0005c, #ff007f);
-            box-shadow: 0 6px 12px rgba(176, 0, 92, 0.6);
+            background: linear-gradient(45deg, #0055b3, #b0005c);
+            box-shadow: 0 6px 16px rgba(0, 85, 179, 0.8);
             transform: scale(1.05);
         }
 
@@ -84,7 +123,7 @@
             }
         }
 
-        /* Music toggle button */
+        /* Mute button style */
         #musicToggle {
             position: fixed;
             bottom: 20px;
@@ -95,152 +134,23 @@
             border-radius: 50%;
             width: 50px;
             height: 50px;
-            font-size: 22px;
+            font-size: 24px;
             cursor: pointer;
             z-index: 10000;
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        /* Flags and pins container */
-        .flags-container {
-            position: fixed;
-            top: 40%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            pointer-events: none;
-            z-index: 5000;
-            padding: 0 40px;
-        }
-
-        /* Each flag */
-        .flag {
-            position: relative;
-            width: 120px;
-            height: 80px;
-            box-shadow: 0 0 10px rgba(176, 0, 92, 0.7);
-            border-radius: 12px;
-            background-color: white;
-        }
-
-        .flag img {
-            width: 100%;
-            height: 100%;
-            border-radius: 12px;
-            object-fit: cover;
-        }
-
-        /* Pin below each flag */
-        .pin {
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 30px;
-            height: 30px;
-            background: radial-gradient(circle at center, #b0005c 40%, transparent 70%);
-            border-radius: 50% 50% 50% 0;
-            transform-origin: bottom left;
-            transform: translateX(-50%) rotate(-45deg);
-            box-shadow: 0 0 5px #b0005c;
-            filter: drop-shadow(0 0 3px #b0005c);
-        }
-
-        /* Heart SVG connector */
-        .heart-connector {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            width: 200px;
-            height: 150px;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 4999;
+            box-shadow: 0 4px 10px rgba(176, 0, 92, 0.8);
+            user-select: none;
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <div>
-            <h1 class="header_text">Do you wanna go out with me?</h1>
-            <h1 class="header_text">Are you free today?</h1>
-        </div>
-
-        <!-- Your original funny GIF restored -->
-        <div class="gif_container">
-            <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDdtZ2JiZDR0a3lvMWF4OG8yc3p6Ymdvd3g2d245amdveDhyYmx6eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif"
-                alt="Funny animated cartoon">
-        </div>
-
-        <div class="buttons">
-            <button class="btn" id="yesButton" onclick="handleYesClick()">Yes</button>
-            <button class="btn" id="noButton" onclick="handleNoClick()">No</button>
-        </div>
-    </div>
-
-    <!-- Flags with pins -->
+    <!-- Flags with clickable links -->
     <div class="flags-container">
-        <div class="flag" id="ukFlag">
-            <img src="images/ukflag.svg" alt="UK Flag" />
-            <div class="pin"></div>
-        </div>
-
-        <div class="flag" id="indiaFlag">
-            <img src="images/indiaflag.svg" alt="India Flag" />
-            <div class="pin"></div>
-        </div>
-    </div>
-
-    <!-- Heart SVG connector between the two flags -->
-    <svg class="heart-connector" viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-        <path
-            d="M20 75 Q100 0 180 75 Q100 150 20 75 Z"
-            fill="none" stroke="#b0005c" stroke-width="4" />
-        <text x="100" y="65" text-anchor="middle" font-size="36" fill="#b0005c" font-family="Arial">❤️</text>
-    </svg>
-
-    <!-- Background music -->
-    <audio id="bgMusic" loop>
-        <source src="music/music.mp3" type="audio/mp3" />
-        <!-- Your actual Dooriyan song mp3 should be here -->
-    </audio>
-    <button id="musicToggle" title="Mute/Unmute Music">🔈</button>
-
-    <!-- Confetti library -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-    <script>
-        const yesButton = document.getElementById("yesButton");
-        const noButton = document.getElementById("noButton");
-        const bgMusic = document.getElementById("bgMusic");
-        const musicToggle = document.getElementById("musicToggle");
-        let clickCount = 0;
-
-        // Play music on load, muted if blocked
-        bgMusic.volume = 0.3;
-        bgMusic.muted = false;
-        bgMusic.play().catch(() => {
-            bgMusic.muted = true;
-        });
-
-        // Toggle music
-        musicToggle.addEventListener("click", () => {
-            if (bgMusic.muted) {
-                bgMusic.muted = false;
-                musicToggle.textContent = "🔈";
-            } else {
-                bgMusic.muted = true;
-                musicToggle.textContent = "🔇";
-            }
-        });
-
-        // Create floating heart at position
-        function createHeart(x, y) {
-            const heart = document.createElement("div");
-            heart.classList.add("heart");
-            heart.style.left = `${x}px`;
-            heart.style.top = `${y}px`;
-            document.body.appendChild
+        <a href="https://goo.gl/maps/4R9f5dZ7y9C2" target="_blank" title="He is in UK - London">
+            <img class="flag" src="https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg" alt="UK Flag" />
+        </a>
+        <a href="https://goo.gl/maps/fqFGx2uT1vE2" target="_blank" title="I am in India - New Delhi">
+            <img class="flag" src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="India
