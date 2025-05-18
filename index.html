@@ -2,256 +2,254 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="./styles.css">
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-image:
-                linear-gradient(to right, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)),
-                url('https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg'),
-                url('https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg');
-            background-size: 50% 100%, 50% 100%;
-            background-position: left, right;
-            background-repeat: no-repeat;
-            overflow-x: hidden; /* prevent horizontal scroll from moving button */
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Simple Fun Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background-color: #fff0f6;
+      color: #b0005c;
+      margin: 0;
+    }
 
-        .container {
-            position: relative;
-            text-align: center;
-            padding-top: 50px;
-        }
+    .flags {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      margin: 20px 0;
+    }
 
-        .header_text {
-            font-size: 24px;
-            font-weight: bold;
-            color: #b0005c;
-            margin: 10px 0;
-        }
+    .flag-box {
+      text-align: center;
+    }
 
-        .gif_container img {
-            width: 250px;
-            margin: 20px 0;
-        }
+    .flag-box img {
+      width: 140px;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    }
 
-        .buttons {
-            margin-top: 20px;
-            position: relative;
-            height: 60px; /* reserve space for moving buttons */
-        }
+    .flag-box p {
+      margin-top: 10px;
+      font-weight: bold;
+      font-size: 18px;
+    }
 
-        .btn {
-            padding: 12px 26px;
-            margin: 10px;
-            font-size: 18px;
-            font-weight: 600;
-            background: linear-gradient(45deg, #ff4b6e, #ff8e53);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 75, 110, 0.4);
-        }
+    .gif-container img {
+      width: 250px;
+      margin: 20px 0;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(176, 0, 92, 0.3);
+    }
 
-        .btn:hover {
-            background: linear-gradient(45deg, #ff8e53, #ff4b6e);
-            box-shadow: 0 6px 20px rgba(255, 142, 83, 0.6);
-            transform: scale(1.05);
-        }
+    .buttons {
+      margin-top: 30px;
+      position: relative;
+      height: 70px;
+    }
 
-        /* Floating hearts container */
-        .heart {
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            background-image: url('https://emoji.slack-edge.com/T024FPYBQ/heart/4e1ec3f1be1f9b5b.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            pointer-events: none;
-            animation: floatUp 2s ease forwards;
-            z-index: 9999;
-        }
+    button {
+      font-size: 20px;
+      padding: 14px 30px;
+      margin: 0 20px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      background: linear-gradient(45deg, #ff4b6e, #ff8e53);
+      color: white;
+      box-shadow: 0 5px 15px rgba(255, 75, 110, 0.5);
+      transition: transform 0.2s ease;
+      user-select: none;
+      position: relative;
+      z-index: 10;
+    }
 
-        @keyframes floatUp {
-            0% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+    button:hover {
+      transform: scale(1.1);
+    }
 
-            100% {
-                opacity: 0;
-                transform: translateY(-100px) scale(1.5);
-            }
-        }
+    #noButton {
+      position: relative;
+    }
 
-        /* Mute button style */
-        #musicToggle {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #b0005c;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 24px;
-            cursor: pointer;
-            z-index: 10000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 10px #b0005c;
-        }
+    /* Heart style */
+    .heart {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      background-image: url('https://twemoji.maxcdn.com/v/latest/svg/2764.svg');
+      background-size: contain;
+      pointer-events: none;
+      animation: floatUp 2s forwards;
+      z-index: 9999;
+    }
 
-        /* Flags container with labels */
-        .flags-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 60px;
-            margin-top: 25px;
-        }
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
 
-        .flag-box {
-            text-align: center;
-        }
+      100% {
+        opacity: 0;
+        transform: translateY(-100px) scale(1.5);
+      }
+    }
 
-        .flag-box img {
-            width: 140px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
+    #musicToggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #b0005c;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #b0005c;
+    }
 
-        .flag-box p {
-            margin-top: 10px;
-            font-weight: 700;
-            font-size: 16px;
-            color: #b0005c;
-        }
-    </style>
+    /* Custom message after YES click */
+    #customMessage {
+      margin-top: 40px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #b0005c;
+      opacity: 0;
+      transition: opacity 1.5s ease-in;
+    }
+
+    #customMessage.show {
+      opacity: 1;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="container">
-        <div>
-            <h1 class="header_text">Do you wanna go out with me?</h1>
-            <h1 class="header_text">Are you free today?</h1>
-        </div>
+  <h1>Do you wanna go out with me?</h1>
+  <h1>Are you free today?</h1>
 
-        <div class="gif_container">
-            <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDdtZ2JiZDR0a3lvMWF4OG8yc3p6Ymdvd3g2d245amdveDhyYmx6eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif"
-                alt="Funny animated cartoon">
-        </div>
+  <div class="gif-container">
+    <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDdtZ2JiZDR0a3lvMWF4OG8yc3p6Ymdvd3g2d245amdveDhyYmx6eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif"
+      alt="Funny cartoon" />
+  </div>
 
-        <!-- Flags to show locations -->
-        <div class="flags-container">
-            <div class="flag-box">
-                <img src="https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg" alt="UK Flag">
-                <p>He is in UK</p>
-            </div>
-            <div class="flag-box">
-                <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="India Flag">
-                <p>I am in India</p>
-            </div>
-        </div>
-
-        <div class="buttons">
-            <button class="btn" id="yesButton" onclick="handleYesClick()">Yes</button>
-            <button class="btn" id="noButton" onclick="handleNoClick()">No</button>
-        </div>
+  <div class="flags">
+    <div class="flag-box">
+      <img src="https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg" alt="UK Flag" />
+      <p>He is in UK</p>
     </div>
+    <div class="flag-box">
+      <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="India Flag" />
+      <p>I am in India</p>
+    </div>
+  </div>
 
-    <!-- Background music -->
-    <audio id="bgMusic" loop>
-        <source src="https://cdn.pixabay.com/download/audio/2022/08/15/audio_97a7cc6a68.mp3?filename=dooriyan-romantic-melody-7356.mp3" type="audio/mp3">
-        <!-- Placeholder Dooriyan-like romantic melody -->
-    </audio>
-    <button id="musicToggle" title="Mute/Unmute Music">🔈</button>
+  <div class="buttons">
+    <button id="yesButton">Yes</button>
+    <button id="noButton">No</button>
+  </div>
 
-    <!-- Confetti library -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <!-- Custom message that shows after YES click -->
+  <div id="customMessage">ab mai nhi aayungi</div>
 
-    <script>
-        const yesButton = document.getElementById("yesButton");
-        const noButton = document.getElementById("noButton");
-        const bgMusic = document.getElementById("bgMusic");
-        const musicToggle = document.getElementById("musicToggle");
-        let clickCount = 0;
+  <audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/08/15/audio_97a7cc6a68.mp3?filename=dooriyan-romantic-melody-7356.mp3"
+      type="audio/mp3" />
+  </audio>
+  <button id="musicToggle" title="Mute/Unmute Music">🔈</button>
 
-        // Play music (try autoplay, mute if blocked)
-        bgMusic.volume = 0.3;
+  <script>
+    const yesBtn = document.getElementById("yesButton");
+    const noBtn = document.getElementById("noButton");
+    const bgMusic = document.getElementById("bgMusic");
+    const musicToggle = document.getElementById("musicToggle");
+    const customMessage = document.getElementById("customMessage");
+
+    let noClickCount = 0;
+    const noMessages = [
+      "Bypass ? ",
+      "We Can Make Sauce, NO ?",
+      "WINE ? Still NO?",
+      "NETFLIX & CHILL ? Still NO?",
+      "KISS ? Still NO?",
+      "HUGS ? Still NO?",
+      "Kaise sa hai Tu",
+      "Kitne Drame Hai Tere",
+      "😔😔😔😔",
+      "😢😢😢😢",
+      "Last Bar Puch Rhi Hu"
+    ];
+
+    bgMusic.volume = 0.3;
+    bgMusic.play().catch(() => {
+      bgMusic.muted = true;
+    });
+
+    musicToggle.addEventListener("click", () => {
+      if (bgMusic.muted) {
         bgMusic.muted = false;
-        bgMusic.play().catch(() => {
-            bgMusic.muted = true;
-        });
+        musicToggle.textContent = "🔈";
+      } else {
+        bgMusic.muted = true;
+        musicToggle.textContent = "🔇";
+      }
+    });
 
-        musicToggle.addEventListener("click", () => {
-            if (bgMusic.muted) {
-                bgMusic.muted = false;
-                musicToggle.textContent = "🔈";
-            } else {
-                bgMusic.muted = true;
-                musicToggle.textContent = "🔇";
-            }
-        });
+    function createHeart(x, y) {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.style.left = x + "px";
+      heart.style.top = y + "px";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 2000);
+    }
 
-        function createHeart(x, y) {
-            const heart = document.createElement("div");
-            heart.classList.add("heart");
-            heart.style.left = `${x}px`;
-            heart.style.top = `${y}px`;
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 2000);
-        }
+    yesBtn.addEventListener("click", () => {
+      const rect = yesBtn.getBoundingClientRect();
+      for (let i = 0; i < 10; i++) {
+        const x = rect.left + rect.width / 2 + (Math.random() - 0.5) * 100;
+        const y = rect.top + rect.height / 2 + (Math.random() - 0.5) * 100;
+        createHeart(x, y);
+      }
 
-        function handleYesClick() {
-            // Create multiple hearts at button position
-            const rect = yesButton.getBoundingClientRect();
-            for (let i = 0; i < 10; i++) {
-                const x = rect.left + rect.width / 2 + (Math.random() - 0.5) * 100;
-                const y = rect.top + rect.height / 2 + (Math.random() - 0.5) * 100;
-                createHeart(x, y);
-            }
+      // Show your custom message with fade-in
+      customMessage.classList.add("show");
+    });
 
-            // Confetti effect
-            confetti({
-                particleCount: 100,
-                spread: 70,
-                origin: { y: 0.6 }
-            });
+    noBtn.addEventListener("click", () => {
+      const rect = noBtn.getBoundingClientRect();
+      createHeart(rect.left + rect.width / 2, rect.top + rect.height / 2);
 
-            // Redirect after delay (or replace with love letter page)
-            setTimeout(() => {
-                window.location.href = "yes.html";
-            }, 1500);
-        }
+      noBtn.textContent = noMessages[noClickCount];
+      noClickCount = (noClickCount + 1) % noMessages.length;
+    });
 
-        function handleNoClick() {
-            const rect = noButton.getBoundingClientRect();
-            createHeart(rect.left + rect.width / 2, rect.top + rect.height / 2);
+    // Make NO button avoid cursor when mouse comes close
+    document.addEventListener("mousemove", (e) => {
+      const rect = noBtn.getBoundingClientRect();
+      const mouseX = e.clientX;
+      const mouseY = e.clientY;
 
-            yesButton.style.transform = `scale(${1 + 0.8 * clickCount})`;
-            const buttonText = [
-                "Bypass ? ",
-                "We Can Make Sauce , NO ? ",
-                "WINE ? , STILL NO ?",
-                "NETFLIX & CHILL ? , STILL NO ?",
-                "KISS , STILL NO ?",
-                "HUGS , STILL NO ?",
-                "Kaise sa hai Tu",
-                "Kitne Drame Hai Tere",
-                "😔😔😔😔",
-                "😢😢😢😢",
-                "Last Bar Puch Rhi Hu"
-            ];
+      const distX = Math.abs(mouseX - (rect.left + rect.width / 2));
+      const distY = Math.abs(mouseY - (rect.top + rect.height / 2));
+      const distance = Math.sqrt(distX * distX + distY * distY);
 
-            noButton.textContent = buttonText[clickCount];
-            clickCount = (clickCount + 1) % buttonText.length;
-        }
+      if (distance < 100) {
+        const offsetX = (rect.left + rect.width / 2) - mouseX;
+        const offsetY = (rect.top + rect.height / 2) - mouseY;
+        noBtn.style.transform = `translate(${offsetX * 0.5}px, ${offsetY * 0.5}px)`;
+      } else {
+        noBtn.style.transform = "translate(0,0)";
+      }
+    });
+  </script>
+</body>
 
-        // "No" button avoids mouse cursor when close
-        document.addEventListener("mousemove
+</html>
