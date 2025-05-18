@@ -2,264 +2,283 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="./styles.css">
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-image:
-                linear-gradient(to right, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)),
-                url('https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg'),
-                url('https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg');
-            background-size: 50% 100%, 50% 100%;
-            background-position: left, right;
-            background-repeat: no-repeat;
-            overflow-x: hidden; /* prevent horizontal scroll from moving button */
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Love Proposal Visual Flags</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #fff0f5, #ffe4e1);
+      overflow-x: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      user-select: none;
+    }
 
-        .container {
-            position: relative;
-            text-align: center;
-            padding-top: 50px;
-        }
+    .flags-container {
+      width: 90%;
+      max-width: 700px;
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 40px 0;
+    }
 
-        .header_text {
-            font-size: 24px;
-            font-weight: bold;
-            color: #b0005c;
-            margin: 10px 0;
-        }
+    .flag-box {
+      position: relative;
+      width: 120px;
+      height: 80px;
+      cursor: default;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(176, 0, 92, 0.4);
+      transition: transform 0.3s ease;
+      background: white;
+    }
 
-        .gif_container img {
-            width: 250px;
-            margin: 20px 0;
-        }
+    .flag-box:hover {
+      transform: scale(1.1) rotate(3deg);
+      box-shadow: 0 0 20px rgba(255, 64, 129, 0.7);
+    }
 
-        .buttons {
-            margin-top: 20px;
-            position: relative;
-            height: 60px; /* reserve space for moving buttons */
-        }
+    .flag-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
 
-        .btn {
-            padding: 10px 20px;
-            margin: 10px;
-            font-size: 16px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            position: relative;
-            transition: background-color 0.3s ease;
-        }
+    /* Location pin above flag */
+    .pin {
+      position: absolute;
+      top: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 22px;
+      height: 30px;
+      background: #b0005c;
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      box-shadow: 0 0 6px #b0005c88;
+      z-index: 10;
+    }
 
-        .btn:hover {
-            background-color: #0056b3;
-        }
+    .pin::after {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 10px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 3px #b0005caa;
+    }
 
-        /* Floating hearts container */
-        .heart {
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            background-image: url('https://emoji.slack-edge.com/T024FPYBQ/heart/4e1ec3f1be1f9b5b.png'); /* small heart emoji */
-            background-size: contain;
-            background-repeat: no-repeat;
-            pointer-events: none;
-            animation: floatUp 2s ease forwards;
-            z-index: 9999;
-        }
+    /* Heart dotted curve connecting the two flags */
+    svg.connector {
+      position: absolute;
+      top: 30px;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-        @keyframes floatUp {
-            0% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+    /* Text below */
+    h1 {
+      color: #b0005c;
+      font-weight: 700;
+      margin: 20px 0 10px;
+      font-size: 28px;
+      text-align: center;
+    }
 
-            100% {
-                opacity: 0;
-                transform: translateY(-100px) scale(1.5);
-            }
-        }
+    /* Buttons container */
+    .buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      position: relative;
+      height: 60px; /* reserve space for moving no button */
+    }
 
-        /* Mute button style */
-        #musicToggle {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #b0005c;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 20px;
-            cursor: pointer;
-            z-index: 10000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-    </style>
+    /* Styled buttons */
+    .btn {
+      background: linear-gradient(45deg, #b0005c, #ff4081);
+      border: none;
+      border-radius: 25px;
+      padding: 12px 30px;
+      color: white;
+      font-weight: 700;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(176, 0, 92, 0.7);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .btn:hover {
+      background: linear-gradient(45deg, #ff4081, #b0005c);
+      box-shadow: 0 6px 20px rgba(255, 64, 129, 0.9);
+      transform: translateY(-3px) scale(1.05);
+    }
+
+    .btn:active {
+      transform: translateY(1px) scale(0.95);
+      box-shadow: 0 3px 10px rgba(176, 0, 92, 0.6);
+    }
+
+    /* Floating hearts container */
+    .heart {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      background-image: url('https://emoji.slack-edge.com/T024FPYBQ/heart/4e1ec3f1be1f9b5b.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      pointer-events: none;
+      animation: floatUp 2s ease forwards;
+      z-index: 9999;
+    }
+
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(-100px) scale(1.5);
+      }
+    }
+
+    /* Mute button style */
+    #musicToggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #b0005c;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="container">
-        <div>
-            <h1 class="header_text">Do you wanna go out with me?</h1>
-            <h1 class="header_text">Are you free today?</h1>
-        </div>
-        <div class="gif_container">
-            <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDdtZ2JiZDR0a3lvMWF4OG8yc3p6Ymdvd3g2d245amdveDhyYmx6eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif"
-                alt="Cute animated illustration">
-        </div>
-        <div class="buttons">
-            <button class="btn" id="yesButton" onclick="handleYesClick()">Yes</button>
-            <button class="btn" id="noButton" onclick="handleNoClick()">No</button>
-        </div>
+  <div class="flags-container">
+    <div class="flag-box" title="He is in UK">
+      <div class="pin"></div>
+      <img src="https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg" alt="UK Flag" />
     </div>
 
-    <!-- Background music -->
-    <audio id="bgMusic" loop>
-        <source src="https://cdn.pixabay.com/download/audio/2022/08/15/audio_97a7cc6a68.mp3?filename=dooriyan-romantic-melody-7356.mp3" type="audio/mp3">
-        <!-- (Placeholder song, replace with actual Dooriyan URL if you have it) -->
-    </audio>
-    <button id="musicToggle" title="Mute/Unmute Music">🔈</button>
+    <!-- Heart-shaped dotted curve connecting flags -->
+    <svg class="connector" viewBox="0 0 700 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+      <path
+        d="M100 80
+           C 200 0, 500 0, 600 80
+           M200 80
+           C 300 120, 400 120, 500 80"
+        fill="none"
+        stroke="#b0005c"
+        stroke-width="3"
+        stroke-dasharray="8 10"
+      />
+      <text x="350" y="45" text-anchor="middle" font-size="40" fill="#b0005c" font-family="Arial, sans-serif"
+        dominant-baseline="middle">❤️</text>
+    </svg>
 
-    <!-- Confetti library (cdn) -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <div class="flag-box" title="I am in India">
+      <div class="pin"></div>
+      <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="India Flag" />
+    </div>
+  </div>
 
-    <script>
-        const yesButton = document.getElementById("yesButton");
-        const noButton = document.getElementById("noButton");
-        const bgMusic = document.getElementById("bgMusic");
-        const musicToggle = document.getElementById("musicToggle");
-        let clickCount = 0;
+  <h1>Do you wanna go out with me?</h1>
+  <h1>Are you free today?</h1>
 
-        // Start music on page load, muted by default (for browsers' autoplay policy)
-        bgMusic.volume = 0.3;
+  <div class="buttons">
+    <button class="btn" id="yesButton">Yes</button>
+    <button class="btn" id="noButton">No</button>
+  </div>
+
+  <!-- Background music -->
+  <audio id="bgMusic" loop>
+    <source
+      src="https://cdn.pixabay.com/download/audio/2022/08/15/audio_97a7cc6a68.mp3?filename=dooriyan-romantic-melody-7356.mp3"
+      type="audio/mp3" />
+  </audio>
+  <button id="musicToggle" title="Mute/Unmute Music">🔈</button>
+
+  <!-- Confetti library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    const yesButton = document.getElementById("yesButton");
+    const noButton = document.getElementById("noButton");
+    const bgMusic = document.getElementById("bgMusic");
+    const musicToggle = document.getElementById("musicToggle");
+    let clickCount = 0;
+
+    // Start music on page load, muted by default (browser autoplay policy)
+    bgMusic.volume = 0.3;
+    bgMusic.muted = false;
+    bgMusic.play().catch(() => {
+      bgMusic.muted = true;
+    });
+
+    // Toggle music mute/unmute
+    musicToggle.addEventListener("click", () => {
+      if (bgMusic.muted) {
         bgMusic.muted = false;
-        bgMusic.play().catch(() => {
-            // Some browsers block autoplay; user must toggle manually
-            bgMusic.muted = true;
-        });
+        musicToggle.textContent = "🔈";
+      } else {
+        bgMusic.muted = true;
+        musicToggle.textContent = "🔇";
+      }
+    });
 
-        // Toggle music mute/unmute
-        musicToggle.addEventListener("click", () => {
-            if (bgMusic.muted) {
-                bgMusic.muted = false;
-                musicToggle.textContent = "🔈";
-            } else {
-                bgMusic.muted = true;
-                musicToggle.textContent = "🔇";
-            }
-        });
+    function createHeart(x, y) {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.style.left = `${x}px`;
+      heart.style.top = `${y}px`;
+      document.body.appendChild(heart);
 
-        function createHeart(x, y) {
-            const heart = document.createElement("div");
-            heart.classList.add("heart");
-            heart.style.left = `${x}px`;
-            heart.style.top = `${y}px`;
-            document.body.appendChild(heart);
+      setTimeout(() => {
+        heart.remove();
+      }, 2000);
+    }
 
-            setTimeout(() => {
-                heart.remove();
-            }, 2000);
-        }
+    // Confetti + hearts + redirect on Yes click
+    function handleYesClick() {
+      const rect = yesButton.getBoundingClientRect();
+      for (let i = 0; i < 10; i++) {
+        const x = rect.left + rect.width / 2 + (Math.random() - 0.5) * 100;
+        const y = rect.top + rect.height / 2 + (Math.random() - 0.5) * 100;
+        createHeart(x, y);
+      }
 
-        // Confetti on Yes click + floating heart + redirect
-        function handleYesClick() {
-            // Create multiple hearts at button position
-            const rect = yesButton.getBoundingClientRect();
-            for (let i = 0; i < 10; i++) {
-                const x = rect.left + rect.width / 2 + (Math.random() - 0.5) * 100;
-                const y = rect.top + rect.height / 2 + (Math.random() - 0.5) * 100;
-                createHeart(x, y);
-            }
-
-            // Confetti effect
-            confetti({
-                particleCount: 100,
-                spread: 70,
-                origin: { y: 0.6 }
-            });
-
-            // Redirect after short delay so confetti + hearts can be seen
-            setTimeout(() => {
-                window.location.href = "yes.html";
-            }, 1500);
-        }
-
-        // No click: scale Yes button, floating hearts, change no text, and hearts
-        function handleNoClick() {
-            // Create a heart at No button position
-            const rect = noButton.getBoundingClientRect();
-            createHeart(rect.left + rect.width / 2, rect.top + rect.height / 2);
-
-            yesButton.style.transform = `scale(${1 + 0.8 * clickCount})`;
-            const buttonText = [
-                "Bypass ? ",
-                "We Can Make Sauce , NO ? ",
-                "WINE ? , STILL NO ?",
-                "NETFLIX & CHILL ? , STILL NO ?",
-                "KISS , STILL NO ?",
-                "HUGS , STILL NO ?",
-                "Kaise sa hai Tu",
-                "Kitne Drame Hai Tere",
-                "😔😔😔😔",
-                "😢😢😢😢",
-                "Last Bar Puch Rhi Hu"
-            ];
-
-            noButton.textContent = buttonText[clickCount];
-            clickCount = (clickCount + 1) % buttonText.length;
-        }
-
-        // "No" button avoids mouse cursor when close
-        document.addEventListener("mousemove", (e) => {
-            const noRect = noButton.getBoundingClientRect();
-            const mouseX = e.clientX;
-            const mouseY = e.clientY;
-            const noX = noRect.left + noRect.width / 2;
-            const noY = noRect.top + noRect.height / 2;
-
-            const distance = Math.hypot(mouseX - noX, mouseY - noY);
-
-            // If mouse is within 100px of center of No button, move it away
-            if (distance < 100) {
-                // Calculate new position (push away from mouse)
-                const dx = noX - mouseX;
-                const dy = noY - mouseY;
-                const angle = Math.atan2(dy, dx);
-                const newX = noX + Math.cos(angle) * 100;
-                const newY = noY + Math.sin(angle) * 100;
-
-                // Limit newX and newY so button stays in viewport
-                const bodyWidth = window.innerWidth;
-                const bodyHeight = window.innerHeight;
-                const btnWidth = noRect.width;
-                const btnHeight = noRect.height;
-
-                let finalX = newX - btnWidth / 2;
-                let finalY = newY - btnHeight / 2;
-
-                if (finalX < 0) finalX = 0;
-                if (finalX + btnWidth > bodyWidth) finalX = bodyWidth - btnWidth;
-                if (finalY < 0) finalY = 0;
-                if (finalY + btnHeight > bodyHeight) finalY = bodyHeight - btnHeight;
-
-                noButton.style.position = "fixed";
-                noButton.style.left = `${finalX}px`;
-                noButton.style.top = `${finalY}px`;
-            } else {
-                // Reset to original position if far
-                noButton.style.position = "relative";
-                noButton.style.left = null;
-                noButton.style.top = null;
-            }
-        });
-    </script>
-</body>
-
-</html>
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin:
