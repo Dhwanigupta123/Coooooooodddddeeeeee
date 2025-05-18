@@ -9,6 +9,7 @@ let noClickCount = 0;
 bgMusic.volume = 0.3;
 bgMusic.play().catch(() => {
   bgMusic.muted = true; // mute if autoplay blocked
+  musicToggle.textContent = "🔇";
 });
 
 musicToggle.addEventListener("click", () => {
